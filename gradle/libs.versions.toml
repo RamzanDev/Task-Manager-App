@@ -1,6 +1,6 @@
 [versions]
 agp = "8.5.1"
-kotlin = "1.9.0"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -8,6 +8,28 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.04.01"
+
+material = "1.12.0"
+timber = "5.0.1"
+navigation = "2.7.7"
+ktorVersion = "2.3.11"
+coilVersion = "2.6.0"
+hiltVersion = "2.51.1"
+kotlinKsp = "2.0.0-1.0.22"
+gmsServices = "4.4.2"
+multidex = "2.0.1"
+hiltComposeVersion = "1.2.0"
+lottieVersion = "4.0.0"
+
+webViewVersion = "0.33.6"
+
+compileSdk = "34"
+minSdk = "26"
+appcompat = "1.7.0"
+materialVersion = "1.12.0"
+firebaseVersion = "33.7.0"
+firebaseAnalyticsVersion = "22.1.2"
+firebaseAuth = "23.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -24,8 +46,86 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended-android" }
+androidx-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
+androidx-coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coilVersion" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
+
+androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-compose-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+
+kotlin-ktor-core = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktorVersion" }
+kotlin-ktor-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktorVersion" }
+kotlin-ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorVersion" }
+kotlin-ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorVersion" }
+kotlin-ktor-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
+kotlin-ktor-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktorVersion" }
+
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
+hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltComposeVersion" }
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+webviewWrapper = { group = "io.github.kevinnzou", name = "compose-webview", version.ref = "webViewVersion" }
+lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieVersion" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseVersion" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalyticsVersion" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinKsp" }
+google-service = { id = "com.google.gms.google-services", version.ref = "gmsServices" }
+[bundles]
+
+androidx = [
+    "androidx-multidex",
+    #    "androidx-constraints"
+]
+
+ktor = [
+    "kotlin-ktor-core",
+    "kotlin-ktor-serialization",
+    "kotlin-ktor-logging",
+    "kotlin-ktor-negotiation",
+    "kotlin-ktor-json",
+    "kotlin-ktor-auth"
+]
+
+lifecycle = [
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose-ktx",
+    "androidx-lifecycle-runtime-compose"
+]
+
+navigation = [
+    #    "androidx-navigation",
+    "androidx-navigation-ui"
+]
+
+compose = [
+    "androidx-ui",
+    "androidx-ui-graphics",
+    "androidx-ui-tooling",
+    "androidx-ui-tooling-preview",
+    "androidx-ui-test-manifest",
+    #    "androidx-ui-runtime",
+    "androidx-material3",
+    "androidx-coil",
+    "androidx-coil-svg",
+    "androidx-material-icons"
+]
+
 

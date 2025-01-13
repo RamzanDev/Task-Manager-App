@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "TaskManagerApp"
 include(":app")
- 
+include(":core")
+include(":feature-auth")
+include(":data")
+include(":domain")
