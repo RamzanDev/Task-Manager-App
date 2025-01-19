@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.1"
+agp = "8.4.1"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -20,6 +20,7 @@ gmsServices = "4.4.2"
 multidex = "2.0.1"
 hiltComposeVersion = "1.2.0"
 lottieVersion = "4.0.0"
+composeVersion = "1.0.0"
 
 webViewVersion = "0.33.6"
 
@@ -39,6 +40,8 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-compiler = { group = "androidx.compose.runtime", name = "runtime", version.ref = "composeVersion" }
+androidx-constraints = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.0.1" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -91,7 +94,7 @@ google-service = { id = "com.google.gms.google-services", version.ref = "gmsServ
 
 androidx = [
     "androidx-multidex",
-    #    "androidx-constraints"
+    "androidx-constraints"
 ]
 
 ktor = [

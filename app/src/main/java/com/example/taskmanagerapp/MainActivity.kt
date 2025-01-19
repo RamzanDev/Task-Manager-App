@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 val appNavigator: AppNavigator = rememberAppNavigator()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AppGraph(navigator = appNavigator, keyLockManager = keyLockManager)
+                    AppGraph(navigator = appNavigator, keyLockManager = keyLockManager, this)
                 }
             }
         }

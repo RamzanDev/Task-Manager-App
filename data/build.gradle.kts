@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.compose)
-
 }
 
 android {
@@ -54,4 +53,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
+    implementation(libs.firebase)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.analytics)
 }
