@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    #Authorization strings
+    <string name="auth_wrong_otp_resend_code">Неверный код. Получить снова</string>
+    <string name="auth_resend_otp_code">Отправить код снова</string>
+    <string name="auth_enter_otp_code">Введите код из СМС</string>
+    <string name="auth_enter_email_and_password">Введите email и пароль для входа</string>
+    <string name="auth_registration">Введите email и пароль для регистрации\nв приложении Task Manager</string>
+    <string name="auth_email">email</string>
+    <string name="auth_invalid_email">Невалидная почта</string>
+    <string name="auth_password">Пароль</string>
+    <string name="auth_invalid_password">Неверный пароль</string>
+    <string name="auth_register_in">Регистрация в приложение Task Manager</string>
+    <string name="auth_continue">Продолжить</string>
+    <string name="auth_email_is_not_found">Такая почта не зарегистрирована в базе!</string>
+    <string name="auth_email_registration_error">Ошибка при регистрации!</string>
+    <string name="auth_wrong_format_number">Такой номер не найден!</string>
+    <string name="auth_phone_number">Номер телефона</string>
+
+
+</resources>

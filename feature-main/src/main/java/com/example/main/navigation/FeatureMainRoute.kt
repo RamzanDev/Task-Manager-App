@@ -1,24 +1,26 @@
-package com.example.feature_auth
+package com.example.main.navigation
 
 import androidx.navigation.NamedNavArgument
 import com.example.core.navigation.NavigationRoute
 
-interface FeatureAuthRoute: NavigationRoute {
+interface FeatureMainRoute : NavigationRoute {
 
     companion object {
-        const val GRAPH_NAME = "feature_auth"
+        const val GRAPH_NAME = "feature_main"
     }
 
-    class EnterPhoneNumber : FeatureAuthRoute {
-
+    class Main : FeatureMainRoute {
         companion object {
-            val INSTANCE = EnterPhoneNumber()
+            val INSTANCE = Main()
         }
 
         override val routeName: String
-            get() = "login"
+            get() = "main"
+
         override val argsName: List<NamedNavArgument>
             get() = emptyList()
+
         override var routeNameWithArgs: String = routeName
+
     }
 }
