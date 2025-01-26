@@ -1,6 +1,5 @@
-package com.example.feature_auth.screen.phonenumber
+package com.example.feature_auth.screen.email
 
-import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,20 +27,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.navOptions
 import com.example.core.navigation.BaseNavigator
 import com.example.core.navigation.MockNavigator
-import com.example.domain.model.PhoneNumber
+import com.example.core.navigation.NavigationGraphName
+import com.example.domain.model.Email
 import com.example.feature_auth.contract.LoginContract
 import com.example.feature_auth.navigation.FeatureAuthRoute
 import com.example.feature_auth.viewmodel.LoginViewModel
 import com.example.uikit.theme.TaskManagerMargin
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
@@ -49,14 +49,12 @@ import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 
 @Composable
-fun PhoneNumberScreen(
+fun SignInWithEmailScreen(
     navigator: BaseNavigator = MockNavigator,
-    viewModel: LoginViewModel = hiltViewModel(),
-    activity: Activity
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
 
     val intentChannel = remember { Channel<LoginContract.ViewIntent>(Channel.UNLIMITED) }
@@ -72,9 +70,22 @@ fun PhoneNumberScreen(
     val viewEvent by viewModel.singleEvent.collectAsStateWithLifecycle(initialValue = null)
     LaunchedEffect(key1 = viewEvent) {
         when (val event = viewEvent) {
-            is LoginContract.SingleEvent.NavigateToOtp -> {
-                Timber.tag("navigate").d("NavigateToOtp")
-                navigator.navigate(FeatureAuthRoute.Otp.create(event.phoneNumber.value))
+            is LoginContract.SingleEvent.NavigateToMainScreen -> {
+                Timber.tag("navigate").d("NavigateToMainScreen")
+                navigator.navigate(
+                    route = NavigationGraphName.FEATURE_MAIN.id,
+                    navOptions =
+                    navOptions {
+                        popUpTo(NavigationGraphName.FEATURE_MAIN.id) {
+                            inclusive = false
+                        }
+                    },
+                )
+            }
+
+            is LoginContract.SingleEvent.NavigateToRegistration -> {
+                Timber.tag("navigate").d("NavigateToRegistrationScreen")
+                navigator.navigate(FeatureAuthRoute.Registration.INSTANCE)
             }
 
             null -> Unit
@@ -98,22 +109,19 @@ fun PhoneNumberScreen(
                     bottom.linkTo(icons.top)
                 },
                 viewState = viewState,
-                onPhoneNumberEntered = {
-                    intentChannel.trySend(LoginContract.ViewIntent.OnNumberChanged(it))
+                onEmailEntered = {
+                    intentChannel.trySend(LoginContract.ViewIntent.OnEmailChanged(it))
                 },
                 onActionClicked = {
-                    val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
-                        .setTimeout(60L, TimeUnit.SECONDS)
-                        .setActivity(activity)
-                    intentChannel.trySend(LoginContract.ViewIntent.Login(options))
+                    intentChannel.trySend(LoginContract.ViewIntent.Login)
                     Timber.tag("login___________").d("trySend")
-
+                },
+                onRegistrationClicked = {
+                    intentChannel.trySend(LoginContract.ViewIntent.Registration)
                 }
-
             )
         }
-        ShowNumberNotFound(isVisible = viewState.isNumberNotFoundVisible)
-
+        ShowEmailNotFound(isVisible = viewState.isEmailNotCorrect)
     }
 
 }
@@ -122,14 +130,18 @@ fun PhoneNumberScreen(
 private fun InputContainer(
     modifier: Modifier = Modifier,
     viewState: LoginContract.ViewState,
-    onPhoneNumberEntered: (PhoneNumber) -> Unit = {},
-    onActionClicked: () -> Unit = {}
+    onEmailEntered: (Email) -> Unit = {},
+    onActionClicked: () -> Unit = {},
+    onRegistrationClicked: () -> Unit = {}
 ) {
-    var phoneNumber by remember { mutableStateOf("") }
-    var isPhoneValid by remember { mutableStateOf(true) }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var isEmailValid by remember { mutableStateOf(true) }
+    var isPasswordValid by remember { mutableStateOf(true) }
 
-    val validatePhoneNumber: (String) -> Boolean = { phone ->
-        phone.matches(Regex("^\\+?[1-9]\\d{1,14}\$")) // Пример валидации для международного номера
+    val validateEmail: (String) -> Boolean = { email ->
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
+        email.matches(emailRegex)
     }
 
     Column(
@@ -144,32 +156,58 @@ private fun InputContainer(
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
         }
+
         Text(
-            text = stringResource(com.example.locale.R.string.auth_enter_phone_number),
+            text = stringResource(com.example.locale.R.string.auth_enter_email_and_password),
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         OutlinedTextField(
-            value = phoneNumber,
+            value = email,
             onValueChange = {
-                phoneNumber = it
-                val phoneNumber = PhoneNumber.create(it)
-                onPhoneNumberEntered.invoke(phoneNumber)
-                isPhoneValid = validatePhoneNumber(it)
-
+                email = it
+                isEmailValid = validateEmail(it)
+                onEmailEntered(Email(email, password))
             },
-            label = { Text(text = stringResource(com.example.locale.R.string.auth_phone_number)) },
-            isError = !isPhoneValid,
+            label = { Text(text = stringResource(com.example.locale.R.string.auth_email)) },
+            isError = !isEmailValid,
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Phone
+                keyboardType = KeyboardType.Email
             ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        if (!isPhoneValid) {
+        if (!isEmailValid) {
             Text(
-                text = stringResource(com.example.locale.R.string.auth_wrong_format_number),
+                text = stringResource(com.example.locale.R.string.auth_invalid_email),
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = {
+                password = it
+                isPasswordValid = password.isNotEmpty() && password.length >= 6
+                onEmailEntered(Email(email, password))
+            },
+            label = { Text(text = stringResource(com.example.locale.R.string.auth_password)) },
+            isError = !isPasswordValid,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Password
+            ),
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        if (!isPasswordValid) {
+            Text(
+                text = stringResource(com.example.locale.R.string.auth_invalid_password),
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(top = 4.dp)
@@ -182,21 +220,21 @@ private fun InputContainer(
             onClick = {
                 onActionClicked()
             },
-
-            enabled = isPhoneValid && phoneNumber.isNotBlank(),
+            enabled = isEmailValid && isPasswordValid && email.isNotBlank() && password.isNotBlank(),
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = stringResource(com.example.locale.R.string.auth_continue))
         }
+
         Spacer(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .size(TaskManagerMargin.S)
                 .align(Alignment.CenterHorizontally),
         )
+
         Button(
             onClick = {
-                // тут реализовать регистрацию
+                onRegistrationClicked()
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -207,14 +245,14 @@ private fun InputContainer(
 
 
 @Composable
-private fun ShowNumberNotFound(isVisible: Boolean) {
+private fun ShowEmailNotFound(isVisible: Boolean) {
     if (isVisible) {
-        PhoneNotFoundToast(message = stringResource(com.example.locale.R.string.auth_number_not_found))
+        EmailNotFoundToast(message = stringResource(com.example.locale.R.string.auth_email_is_not_found))
     }
 }
 
 @Composable
-fun PhoneNotFoundToast(message: String) {
+fun EmailNotFoundToast(message: String) {
     val context = LocalContext.current
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }

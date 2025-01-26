@@ -1,6 +1,6 @@
 package com.example.data.di
 
-import com.example.data.repository.AuthRepositoryImpl
+import com.example.data.repository.FirebaseAuthRepositoryImpl
 import com.example.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Binds
@@ -16,7 +16,7 @@ internal abstract class AuthModule {
 
     @Binds
     @Singleton
-    abstract fun authRepository(impl: AuthRepositoryImpl): AuthRepository
+    abstract fun authRepository(impl: FirebaseAuthRepositoryImpl): AuthRepository
 
     companion object {
         @Provides

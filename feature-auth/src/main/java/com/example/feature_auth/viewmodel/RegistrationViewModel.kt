@@ -5,7 +5,7 @@ import com.example.base.AbstractMviViewModel
 import com.example.domain.interactor.AuthInteractor
 import com.example.domain.model.Email
 import com.example.domain.model.PhoneNumber
-import com.example.feature_auth.contract.LoginContract
+import com.example.feature_auth.contract.RegistrationContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,15 +21,16 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class RegistrationViewModel @Inject constructor(
     private val authInteractor: AuthInteractor
-) : AbstractMviViewModel<LoginContract.ViewIntent, LoginContract.ViewState, LoginContract.SingleEvent>() {
+) : AbstractMviViewModel<RegistrationContract.ViewIntent, RegistrationContract.ViewState, RegistrationContract.SingleEvent>() {
+
 
     private val email = MutableStateFlow(Email.EMPTY)
 
-    private val _viewState = MutableStateFlow(LoginContract.ViewState(email = email.value))
+    private val _viewState = MutableStateFlow(RegistrationContract.ViewState(email = email.value))
 
-    override val viewState: StateFlow<LoginContract.ViewState> = _viewState.asStateFlow()
+    override val viewState: StateFlow<RegistrationContract.ViewState> = _viewState.asStateFlow()
 
     init {
         email
@@ -47,37 +48,33 @@ class LoginViewModel @Inject constructor(
         intentSharedFlow.onEach { newIntent ->
             Timber.tag("login___________").d("intentSharedFlow")
             when (newIntent) {
-                is LoginContract.ViewIntent.Login -> {
-                    loginWithEmail(email.value)
+                is RegistrationContract.ViewIntent.Registration -> {
+                    RegistrationWithEmail(email.value)
                 }
 
-                is LoginContract.ViewIntent.OnEmailChanged -> {
-                    email.value = newIntent.email
+                is RegistrationContract.ViewIntent.OnEmailChanged -> {
+                    email.value = newIntent.value
                 }
 
-                is LoginContract.ViewIntent.SetEmailIsNotCorrect -> {
+                is RegistrationContract.ViewIntent.SetEmailIsNotCorrect -> {
                     _viewState.update {
                         it.copy(isEmailNotCorrect = newIntent.isVisible)
                     }
-                }
-
-                is LoginContract.ViewIntent.Registration -> {
-                    openRegistrationScreen()
                 }
             }
         }.shareIn(this.viewModelScope, SharingStarted.Eagerly)
     }
 
-    private fun loginWithEmail(email: Email) = launch {
+    private fun RegistrationWithEmail(email: Email) = launch {
         _viewState.update { it.copy(isLoading = true) }
-        val result = authInteractor.loginWithEmail(email.value, email.password)
+        val result = authInteractor.registerWithEmailAndPassword(email.value, email.password)
         result.onSuccess { user ->
-            // Пользователь успешно вошёл
+            // Пользователь успешно зарегистрирован
             _viewState.update { it.copy(isLoading = false) }
-            sendEvent(LoginContract.SingleEvent.NavigateToMainScreen)
+            sendEvent(RegistrationContract.SingleEvent.NavigateToSignIn)
             println("Welcome ${user?.email}")
         }.onFailure { exception ->
-            // Ошибка входа
+            // Ошибка регистрации
             _viewState.update {
                 it.copy(
                     isEmailNotCorrect = true,
@@ -87,12 +84,5 @@ class LoginViewModel @Inject constructor(
             println("Login failed: ${exception.message}")
         }
 
-    }
-
-    private fun openRegistrationScreen() {
-        launch {
-            sendEvent(LoginContract.SingleEvent.NavigateToRegistration)
-
-        }
     }
 }

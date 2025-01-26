@@ -1,34 +1,32 @@
 package com.example.feature_auth.navigation
 
-import android.app.Activity
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.core.navigation.BaseNavigator
-import com.example.feature_auth.screen.phonenumber.OTPInputField
-import com.example.feature_auth.screen.phonenumber.PhoneNumberScreen
+import com.example.feature_auth.screen.email.SignInWithEmailScreen
+import com.example.feature_auth.screen.registration.RegistrationScreen
 
 fun NavGraphBuilder.registerAuthGraph(
-    navigator: BaseNavigator,
-    activity: Activity
+    navigator: BaseNavigator
 ) {
 
     navigation(
-        startDestination = FeatureAuthRoute.EnterPhoneNumber.INSTANCE.routeName,
+        startDestination = FeatureAuthRoute.EnterEmail.INSTANCE.routeName,
         route = FeatureAuthRoute.GRAPH_NAME
     ) {
 
         composable(
-            route = FeatureAuthRoute.EnterPhoneNumber.INSTANCE.routeName,
-            arguments = FeatureAuthRoute.EnterPhoneNumber.INSTANCE.argsName
+            route = FeatureAuthRoute.EnterEmail.INSTANCE.routeName,
+            arguments = FeatureAuthRoute.EnterEmail.INSTANCE.argsName
         ) {
-            PhoneNumberScreen(navigator, activity = activity)
+            SignInWithEmailScreen(navigator)
         }
         composable(
-            route = FeatureAuthRoute.Otp.INSTANCE.routeName,
-            arguments = FeatureAuthRoute.Otp.INSTANCE.argsName
+            route = FeatureAuthRoute.Registration.INSTANCE.routeName,
+            arguments = FeatureAuthRoute.Registration.INSTANCE.argsName
         ) {
-            OTPInputField(navigator)
+            RegistrationScreen(navigator)
         }
     }
 }

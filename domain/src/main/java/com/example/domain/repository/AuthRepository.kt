@@ -1,10 +1,9 @@
 package com.example.domain.repository
 
-import com.example.domain.model.PhoneNumber
-import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.FirebaseUser
 
 interface AuthRepository {
 
-    suspend fun login(phoneNumber: PhoneNumber, options: PhoneAuthOptions)
-    suspend fun register(phoneNumber: PhoneNumber)
+    suspend fun loginWithEmail(email: String, password: String): Result<FirebaseUser?>
+    suspend fun registerWithEmailAndPassword(email: String, password: String): Result<FirebaseUser?>
 }

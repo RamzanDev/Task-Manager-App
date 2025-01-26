@@ -2,8 +2,6 @@ package com.example.feature_auth.navigation
 
 import androidx.navigation.NamedNavArgument
 import com.example.core.navigation.NavigationRoute
-import com.example.core.navigation.stringArgument
-import com.example.core.util.insertArgs
 
 interface FeatureAuthRoute : NavigationRoute {
 
@@ -11,10 +9,10 @@ interface FeatureAuthRoute : NavigationRoute {
         const val GRAPH_NAME = "feature_auth"
     }
 
-    class EnterPhoneNumber : FeatureAuthRoute {
+    class EnterEmail : FeatureAuthRoute {
 
         companion object {
-            val INSTANCE = EnterPhoneNumber()
+            val INSTANCE = EnterEmail()
         }
 
         override val routeName: String
@@ -24,24 +22,16 @@ interface FeatureAuthRoute : NavigationRoute {
         override var routeNameWithArgs: String = routeName
     }
 
-    class Otp : FeatureAuthRoute {
-        companion object {
-            val INSTANCE = Otp()
+    class Registration : FeatureAuthRoute {
 
-            fun create(phoneNumber: String): Otp {
-                return Otp().apply {
-                    routeNameWithArgs = routeName.insertArgs("phoneNumber", phoneNumber)
-                }
-            }
+        companion object {
+            val INSTANCE = Registration()
         }
 
         override val routeName: String
-            get() = "login/{phoneNumber}"
-
+            get() = "registration"
         override val argsName: List<NamedNavArgument>
-            get() = listOf(stringArgument("phoneNumber"))
-
+            get() = emptyList()
         override var routeNameWithArgs: String = routeName
-
     }
 }
