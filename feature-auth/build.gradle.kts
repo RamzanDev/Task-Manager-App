@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -68,4 +69,15 @@ dependencies {
 
     implementation(libs.firebase)
     implementation(libs.firebase.auth)
+
+    implementation(libs.lottie)
+
+    implementation(libs.gms)
+    implementation(libs.credentials)
+    implementation(libs.credentialsPlayServices)
+    implementation(libs.googleIdentity)
+
+    implementation(libs.kotlin.ktor.json)
+
+
 }

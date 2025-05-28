@@ -13,10 +13,24 @@
     <string name="auth_invalid_password">Неверный пароль</string>
     <string name="auth_register_in">Регистрация в приложение Task Manager</string>
     <string name="auth_continue">Продолжить</string>
-    <string name="auth_email_is_not_found">Такая почта не зарегистрирована в базе!</string>
+    <string name="auth_out_from_auth">Вы вышли с окна авторизации</string>
     <string name="auth_email_registration_error">Ошибка при регистрации!</string>
     <string name="auth_wrong_format_number">Такой номер не найден!</string>
     <string name="auth_phone_number">Номер телефона</string>
+
+
+    #Authorization welcome strings
+    <string name="auth_welcome">Записки - путь к успеху</string>
+    <string name="auth_you_will_be">Вы можете быть умным, но если вы не будете записывать свои мысли, вас забудет и общество, и история.</string>
+    <string name="auth_sing_in_with_goolge">Войти с помощью Google</string>
+    <string name="auth_or">или</string>
+    <string name="auth_go_to_registration">Зарегистрироваться</string>
+
+    #Navigation
+    <string name="navigation_item_main">Главная</string>
+    <string name="navigation_item_note">Записи</string>
+    <string name="navigation_item_profile">Профиль</string>
+
 
 
 </resources>

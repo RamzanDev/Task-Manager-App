@@ -7,7 +7,8 @@ interface UserStorageContract {
         private var customKey: String? = null
     ) {
         KEY_ACCESS_TOKEN("KEY_ACCESS_TOKEN"),
-        KEY_REFRESH_TOKEN("KEY_REFRESH_TOKEN");
+        KEY_REFRESH_TOKEN("KEY_REFRESH_TOKEN"),
+        KEY_USER("KEY_USER");
 
         val prefsValue
             get() = customValue?.let {

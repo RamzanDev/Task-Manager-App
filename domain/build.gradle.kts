@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.compose)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -49,5 +50,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.timber)
+    implementation(libs.kotlin.ktor.json)
 
 }

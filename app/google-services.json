@@ -12,7 +12,12 @@
           "package_name": "com.example.taskmanagerapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "228049559657-rvcg9it0vbv16n2iv5f9pqv7jevhj702.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBmv8wv8VPjkZ3cJ7fepTbIZD93gG_cPqM"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228049559657-rvcg9it0vbv16n2iv5f9pqv7jevhj702.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

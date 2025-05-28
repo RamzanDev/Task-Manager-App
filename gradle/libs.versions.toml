@@ -20,7 +20,7 @@ gmsServices = "4.4.2"
 multidex = "2.0.1"
 hiltComposeVersion = "1.2.0"
 lottieVersion = "4.0.0"
-composeVersion = "1.0.0"
+composeVersion = "1.5.2"
 
 webViewVersion = "0.33.6"
 
@@ -31,6 +31,7 @@ materialVersion = "1.12.0"
 firebaseVersion = "33.7.0"
 firebaseAnalyticsVersion = "22.1.2"
 firebaseAuth = "23.1.0"
+gmsAuthVersion = "21.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,7 +43,7 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-compiler = { group = "androidx.compose.runtime", name = "runtime", version.ref = "composeVersion" }
 androidx-constraints = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.0.1" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version = "1.5.15" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
@@ -50,6 +51,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended-android" }
+androidx-material = { group = "androidx.compose.material", name = "material", version = "1.4.0" }
 androidx-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 androidx-coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coilVersion" }
 androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
@@ -79,6 +81,10 @@ material = { group = "com.google.android.material", name = "material", version.r
 firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseVersion" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalyticsVersion" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+gms = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "gmsAuthVersion" }
+credentials = { group = "androidx.credentials", name = "credentials", version = "1.3.0" }
+credentialsPlayServices = { group = "androidx.credentials", name = "credentials-play-services-auth", version = "1.3.0" }
+googleIdentity = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version = "1.1.0" }
 
 
 [plugins]
@@ -90,6 +96,7 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinKsp" }
 google-service = { id = "com.google.gms.google-services", version.ref = "gmsServices" }
+
 [bundles]
 
 androidx = [

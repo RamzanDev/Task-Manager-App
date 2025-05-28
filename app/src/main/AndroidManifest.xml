@@ -33,4 +33,8 @@
         </activity>
     </application>
 
+    <meta-data
+        android:name="com.google.android.gms.auth.api.signin"
+        android:value="228049559657-a86qakek519s816p82ii1t9mm7598156.apps.googleusercontent.com" />
+
 </manifest>

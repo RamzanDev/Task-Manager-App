@@ -56,4 +56,7 @@ dependencies {
     implementation(libs.firebase)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.analytics)
+
+    // google sing in gms
+    implementation(libs.gms)
 }

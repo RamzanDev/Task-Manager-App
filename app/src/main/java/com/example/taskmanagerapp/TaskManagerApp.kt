@@ -1,12 +1,12 @@
 package com.example.taskmanagerapp
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 @HiltAndroidApp
-class TaskManagerApp : Application() {
+class TaskManagerApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":locale"))
     implementation(project(":domain"))
     implementation(project(":core"))
+    implementation(project(":locale"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -64,6 +65,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
+    implementation(libs.androidx.material)
 
     implementation(libs.timber)
 }
